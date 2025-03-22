@@ -15,7 +15,7 @@
 - src/utils/constants.ts — файл с константами
 - src/utils/utils.ts — файл с утилитами
 
-<details><summary>**🛠️ Установка и запуск**</summary>
+<details><summary>🛠️ Установка и запуск</summary>
 Для установки и запуска проекта необходимо выполнить команды
 
 ```
@@ -30,7 +30,7 @@ yarn
 yarn start
 ```
 </details>
-<details><summary>**🏗️ Сборка**</summary>
+<details><summary>🏗️ Сборка</summary>
 
 ```
 npm run build
@@ -43,14 +43,14 @@ yarn build
 ```
 </details>
 
-#Документация
+# Документация
 Приложение использует архитектуру **MVP**, основная логика разделена на логику для корзины и логику для заказа. Сделано это для изолирования модулей, будущего расширения приложение и переиспользования модулей.
 
 ```mermaid
-  classDiagram
-      class basketModal
-      basketModal : +addItem(id:number)
-      basketModal : +removeItem(id:number)
-      basketModal : getTotalPrice()
-      basketModal : getTotalItems()
+classDiagram
+    class basketModal
+    basketModal : +addItem(id:number)
+    basketModal : +removeItem(id:number)
+    basketModal : getTotalPrice()
+    basketModal : getTotalItems()
 ```
