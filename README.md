@@ -49,8 +49,8 @@ yarn build
 ```mermaid
 classDiagram
     class basketModal
-    basketModal : +addItem(id:number)
-    basketModal : +removeItem(id:number)
+    basketModal : +addItem()
+    basketModal : +removeItem()
     basketModal : getTotalPrice()
     basketModal : getTotalItems()
 ```
