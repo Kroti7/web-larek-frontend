@@ -48,8 +48,12 @@ yarn build
 
 ```mermaid
 classDiagram
+  classDef interface fill:#002b80
+  classDef class fill:#33334d
   basketModal <|-- IItem : implements
-  class basketModal {
+  orderModal <|-- IOrderInfo : implements
+
+  class basketModal:::class {
     +basket
     +addItem(id)
     +removeItem(id)
@@ -57,15 +61,31 @@ classDiagram
     +getTotalItems()
   }
 
-  class IItem {
+  class IItem:::interface {
     <<interface>>
-    +id: number;
-    +name: string;
-    +description: string;
-    +tag: string;
-    +image: string;
-    +price: number;
-    +quantity: number;
+    id: number
+    name: string
+    description: string
+    tag: string
+    image: string
+    price: number
+    quantity: number
+  }
+
+  class orderModal:::class {
+    orderInfo
+    checkValidAdress(adress)
+    checkValidEmail(email)
+    checkValidTelNum(telNum)
+    toggleBtn(btnElement)
+  }
+
+  class IOrderInfo:::interface {
+    <<interface>>
+    paymentMethod: paymentTypes;
+    address: string;
+    email: string;
+    telNum?: string;
   }
 
 ```
