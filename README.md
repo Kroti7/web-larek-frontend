@@ -48,8 +48,8 @@ yarn build
 
 ```mermaid
 classDiagram
-  classDef interface fill:#002b80
-  classDef class fill:#33334d
+  classDef interface fill:#028
+  classDef class fill:#33d
   basketModal <|-- IItem : implements
   orderModal <|-- IOrderInfo : implements
 
