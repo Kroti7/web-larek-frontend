@@ -48,9 +48,24 @@ yarn build
 
 ```mermaid
 classDiagram
-    class basketModal
-    basketModal : +addItem(id)
-    basketModal : +removeItem(id)
-    basketModal : +getTotalPrice()
-    basketModal : +getTotalItems()
+  basketModal <|-- IItem : implements
+  class basketModal {
+    +basket
+    +addItem(id)
+    +removeItem(id)
+    +getTotalPrice()
+    +getTotalItems()
+  }
+
+  class IItem {
+    <<interface>>
+    +id: number;
+    +name: string;
+    +description: string;
+    +tag: string;
+    +image: string;
+    +price: number;
+    +quantity: number;
+  }
+
 ```
