@@ -115,6 +115,7 @@ classDiagram
 ### Класс корзины
 Используется для манипуляции данных корзины, где: addItem(id) добавляет товар, removeItem(id) удаляет его, getTotalPrice() возвращает общую стоимость заказа, а getTotalItems() показывает кол-во товаров в корзине
 <details><summary>Код и ссылка</summary>
+
 ```Typescript
 export class basketModal {
   static basket: IItem[] = [];
@@ -128,6 +129,9 @@ export class basketModal {
 </details>
 
 ### Класс заказа
+
+<details><summary>Код и ссылка</summary>
+
 ```Typescript
 export class orderModal {
   orderInfo: IOrderInfo;
@@ -139,6 +143,8 @@ export class orderModal {
   toggleBtn(btnElement: HTMLButtonElement) {}
 }
 ```
+</details>
+
 
 ## Слой представления
 
@@ -146,6 +152,8 @@ export class orderModal {
 
 ## Интерфейсы
 ### Интерфейс товара:
+
+<details><summary>Код и ссылка</summary>
 
 ```Typescript
 export interface IItem {
@@ -158,7 +166,12 @@ export interface IItem {
   quantity?: number;
 }
 ```
+</details>
+
 ### Интерфейс данных заказа:
+
+<details><summary>Код и ссылка</summary>
+
 ```Typescript
 export interface IOrderInfo {
   paymentMethod: paymentTypes;
@@ -167,3 +180,4 @@ export interface IOrderInfo {
   telNum?: string;
 }
 ```
+</details>
