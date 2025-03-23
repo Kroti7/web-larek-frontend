@@ -52,15 +52,15 @@ sequenceDiagram
     participant Presenter
     participant Model
 
-    View->>Presenter: Пользователь изменяет состав корзины
-    Presenter->>Model: Обновляет данные корзины и запрашивает новые данные (общ. сумму и кол-во позиций)
-    Model->>Presenter: Возвращает обновленные данные
-    Presenter->>View: Перерисовывает затронутые элементы
+    View->>Presenter: User changes cart composition
+    Presenter->>Model: Updates cart data and requests new data (total and item count)
+    Model->>Presenter: Returns updated data
+    Presenter->>View: Redraws affected elements
 
-    View->>Presenter: Пользователь добавляет данные о зказе 
-    Presenter->>Model: Валидация данных и их сохранение
-    Model->>Presenter: Возвращает результат валдицаии
-    Presenter->>View: Перерисовывает форму заказа
+    View->>Presenter: User adds order data
+    Presenter->>Model: Validates data and saves it
+    Model->>Presenter: Returns the result of validation
+    Presenter->>View: Redraws order form
 
 ```
 
