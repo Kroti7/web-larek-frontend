@@ -210,7 +210,7 @@ classDiagram
   class ExitOrderSuccess {
   }
 
-  class OrderSuccess implements PopupWindow, ExitOrderSuccess {
+  class OrderSuccess {
   }
 
 ```
