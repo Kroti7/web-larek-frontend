@@ -1,48 +1,60 @@
+class BasketBtn {
+
+}
+
+export class Header implements BasketBtn{
+
+}
+
 export class ItemSmall {
 
-  constructor(container: HTMLElement) {
-    this.tag = ;
-    this.name = ;
-    this.image = ;
-    this.price = ;
-  }
 }
 
-/* export class PopupWindow {
-  constructor(container: HTMLElement, elementInPopup: HTMLElement) {
-    this.element = ;
-    this.btnClosePopup = ;
-  }
-} */
+class ClosePopupBtn {
 
-export class ItemFull {
-  constructor(container: HTMLElement) {
-    this.tag = ;
-    this.name = ;
-    this.description = ;
-    this.image = ;
-    this.price = ;
-
-    this.addBtn = ;
-  }
 }
 
-export class ItemInBasket {
-  constructor(container: HTMLElement) {
-    this.position = ;
-    this.name = ;
-    this.price = ;
+class PopupWindow implements ClosePopupBtn {
 
-    this.removeBtn = ;
-  }
 }
 
-export class Basket {
-  constructor(container: HTMLElement) {
-    this.position = ;
-    this.name = ;
-    this.price = ;
+class AddToBasketBtn {
+  
+}
 
-    this.orderBtn = ;
-  }
+export class ItemFull implements PopupWindow, AddToBasketBtn {
+
+}
+
+
+class ItemInBasket {
+
+}
+
+class OrderBtn {
+
+}
+
+export class Basket implements PopupWindow, ItemInBasket, OrderBtn {
+
+}
+
+class NextBtn {
+
+}
+
+class BuyBtn {
+
+}
+
+export class OrderPopup implements PopupWindow, NextBtn, BuyBtn {
+
+}
+
+class ExitOrderSuccess implements ClosePopupBtn {
+
+}
+
+export class OrderSuccess implements PopupWindow, ExitOrderSuccess{
+
 }

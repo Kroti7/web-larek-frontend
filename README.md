@@ -65,6 +65,13 @@ sequenceDiagram
 ```
 
 
+## Утилиты
+### Класс API
+Класс API используется для работы с сервером, сетивые запросы GET создаются методом get(url), другие типы запросов реализуется через post(url, data, method = POST)
+
+
+## Классы слоя модели
+
 ```mermaid
 classDiagram
   basketModal <|-- IItem : implements
@@ -106,12 +113,7 @@ classDiagram
   }
 
 ```
-## Утилиты
-### Класс API
-Класс API используется для работы с сервером, сетивые запросы GET создаются методом get(url), другие типы запросов реализуется через post(url, data, method = POST)
 
-
-## Классы слоя модели
 ### Класс корзины
 Используется для манипуляции данных корзины, где: addItem(id) добавляет товар, removeItem(id) удаляет его, getTotalPrice() возвращает общую стоимость заказа, а getTotalItems() показывает кол-во товаров в корзине
 <details><summary>Код и ссылка</summary>
@@ -149,6 +151,81 @@ export class orderModal {
 ## Слой представления
 
 ## Слой просмотра
+
+```mermaid
+classDiagram
+  Header <|-- basketBtn : implements
+  PopupWindow <|-- ClosePopupBtn : implements
+  ItemFull <|-- PopupWindow : implements
+  ItemFull <|-- AddToBasketBtn : implements
+  Basket <|-- PopupWindow : implements
+  Basket <|-- ItemInBasket : implements
+  Basket <|-- OrderBtn : implements
+  OrderPopup <|-- PopupWindow : implements
+  OrderPopup <|-- NextBtn : implements
+  OrderPopup <|-- BuyBtn : implements
+  ExitOrderSuccess <|-- ClosePopupBtn : implements
+  OrderSuccess <|-- PopupWindow : implements
+  OrderSuccess <|-- ExitOrderSuccess : implements
+
+  class basketBtn {
+  }
+
+  class Header {
+  }
+
+  class ItemSmall {    
+  }
+
+  class ClosePopupBtn {
+  }
+
+  class PopupWindow {
+  }
+
+  class AddToBasketBtn {
+  }
+
+  class ItemFull {
+  }
+
+  class ItemInBasket {
+  }
+
+  class OrderBtn {
+  }
+
+  class Basket {
+  }
+
+  class NextBtn {
+  }
+
+  class BuyBtn {
+  }
+
+  class OrderPopup {
+  }
+
+  class ExitOrderSuccess {
+  }
+
+  class OrderSuccess implements PopupWindow, ExitOrderSuccess {
+  }
+
+```
+
+### Класс Заголовка
+
+### Класс Товара в свернутом виде
+
+### Класс Товара в развернутом виде
+
+### Класс Окна корзины
+
+### Класс Окна оформления заказа
+
+### Класс Класс успешного оформления заказа
 
 ## Интерфейсы
 ### Интерфейс товара:
