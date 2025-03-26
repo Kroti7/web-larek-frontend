@@ -4,8 +4,8 @@ enum paymentTypes {
 }
 
 export interface IOrderInfo {
-  paymentMethod: paymentTypes;
-  address: string;
-  email: string;
-  telNum?: string;
+  paymentMethod: paymentTypes | null;
+  address: string | null;
+  email: string | null;
+  telNum?: string | null;
 }

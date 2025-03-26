@@ -46,6 +46,9 @@ yarn build
 # 📘 Документация
 Приложение использует архитектуру **MVP**, основная логика разделена на логику для корзины и логику для заказа. Сделано это для изолирования, будущего расширения приложение и переиспользования модулей.
 
+
+## Общая схема взаимодействия слоев MVP архитектуры:
+
 ```mermaid
 sequenceDiagram
     participant View
@@ -67,7 +70,7 @@ sequenceDiagram
 
 ## Утилиты
 ### Класс API
-Класс API используется для работы с сервером, сетивые запросы GET создаются методом get(url), другие типы запросов реализуется через post(url, data, method = POST)
+Класс API используется для работы с сервером, сетевые запросы GET создаются методом get(url), другие типы запросов реализуется через post(url, data, method = POST)
 
 
 ## Классы слоя модели
@@ -114,35 +117,40 @@ classDiagram
 
 ```
 
-### Класс корзины
-Используется для манипуляции данных корзины, где: addItem(id) добавляет товар, removeItem(id) удаляет его, getTotalPrice() возвращает общую стоимость заказа, а getTotalItems() показывает кол-во товаров в корзине
-<details><summary>Код и ссылка</summary>
+### Класс basketModal
+Используется для манипуляции данных корзины, где: addItem(id) добавляет товар, removeItem(id) удаляет его, getTotalPrice() возвращает общую стоимость заказа, а getTotalItems() показывает кол-во товаров в корзине.
+
+<details><summary>Код</summary>
 
 ```Typescript
 export class basketModal {
   static basket: IItem[] = [];
 
-  addItem(id:number) {}
-  removeItem(id:number) {}
+  addItem(id:number): void {}
+  removeItem(id:number): void {}
   getTotalPrice(): number {}
   getTotalItems(): number {}
 }
 ```
 </details>
 
-### Класс заказа
+### Класс orderModal
+Используется для проверки данных заказа на валидность, инцирует объект данных каказа.
 
-<details><summary>Код и ссылка</summary>
+<details><summary>Код</summary>
 
 ```Typescript
 export class orderModal {
-  orderInfo: IOrderInfo;
+  static orderInfo: IOrderInfo = {
+    paymentMethod = null,
+    address = null,
+    email = null,
+    telNum = null,
+  };
 
-  checkValidAdress(adress: string) {}
-  checkValidEmail(email: string) {}
-  checkValidTelNum(telNum: string) {}
-
-  toggleBtn(btnElement: HTMLButtonElement) {}
+  checkValidAdress(adress: string): boolean {}
+  checkValidEmail(email: string): boolean {}
+  checkValidTelNum(telNum: string): boolean {}
 }
 ```
 </details>
@@ -150,12 +158,71 @@ export class orderModal {
 
 ## Слой представления
 
+### Класс ItemSmallHandler
+Отвечает за открытие модального окна товара с нужными данными
+<details><summary>Код</summary>
+
+```Typescript
+class ItemSmallHandler {
+  openFullItemPopup(ItemData: IItem): void {}
+}
+```
+</details>
+
+### Класс BasketChangeHandler
+Отвечает за обновление данных корзины и перерисовку связанных элементов
+<details><summary>Код</summary>
+
+```Typescript
+class BasketChangeHandler implements basketModal {
+  updateBasketIcon(): void {
+    basketModal.getTotalItems();
+  }
+
+  updateRender(): void {}
+
+  addToBasket(id: number): void {
+    basketModal.addItem(id);
+    this.updateBasketIcon();
+  }
+
+  removeFromBasket(id: number): void {
+    basketModal.removeItem(id);
+    this.updateBasketIcon();
+    this.updateRender();
+  }
+}
+```
+</details>
+
+### Класс Orderhandler
+Отвечает за валидацию вводимых данных, перерисовку элементов формы (показ ошибки данных и кнопка перехода на другую страницу попапа)
+<details><summary>Код</summary>
+
+```Typescript
+class Orderhandler implements orderModal {
+  changeValidity(isValid: boolean, formInputFieldElement: HTMLElement): void {}
+  changeBtnDisableAtr(isFormValid: boolean, btnElement: HTMLButtonElement): void {}
+
+  validateInput(inputData: any, validatingMethod: any, targetInputFieldElement: HTMLElement, formElement: HTMLFormElement, formBtnElement: HTMLButtonElement): void {
+    this.changeValidity(validatingMethod(inputData), targetInputFieldElement);
+    this.changeBtnDisableAtr(formElement.validity.valid, formBtnElement);
+  }
+
+  continueOrder(orderData: IOrderInfo) {}
+  renderNextPage() {}
+}
+
+```
+</details>
+
 ## Слой просмотра
 
 ```mermaid
 classDiagram
   Header <|-- basketBtn : implements
   PopupWindow <|-- ClosePopupBtn : implements
+  ItemInBasket <|-- RemoveItemBtn : implements
   ItemFull <|-- PopupWindow : implements
   ItemFull <|-- AddToBasketBtn : implements
   Basket <|-- PopupWindow : implements
@@ -189,6 +256,9 @@ classDiagram
   class ItemFull {
   }
 
+  class RemoveItemBtn {
+  }
+
   class ItemInBasket {
   }
 
@@ -215,22 +285,31 @@ classDiagram
 
 ```
 
-### Класс Заголовка
+### Класс хедера страницы - Header
+Создает элемент хедера страницы и включает в себя кнопку корзины, которая показывает кол-во товаров, добавленных в корзину.
 
-### Класс Товара в свернутом виде
+### Класс Товара в свернутом виде - ItemSmall
+Частично использует данные товара, при нажатии открывает попап товара в развернутом виде.
 
-### Класс Товара в развернутом виде
+### Класс попапа - PopupWindow
+Класс нужен как контейнер для элементов на сайте.
 
-### Класс Окна корзины
+### Класс Товара в развернутом виде - ItemFull
+Использует почти все данные товара, имплементирует класс попапа как контейнера. 
 
-### Класс Окна оформления заказа
+### Класс Окна корзины - Basket
+Использует попап как контейнер, получает данные корзины от basketModal(позиции и общую цену). Используемые классы: ItemInBasket для позиций товаров в корзине, OrderBtn для перехода на попапы оформления заказа.
 
-### Класс Класс успешного оформления заказа
+### Класс Окна оформления заказа - OrderPopup
+Использует попап как контейнер, либо принимает поля как аргумент для их отрисовки, либо переключает видимость попапов в разметки (в зависимоти от требований проекта). Использует класс orderModal для проверки валидности полей.
+
+### Класс успешного оформления заказа - OrderSuccess
+Использует попап как контейнер, кнопка "совершения новых заказов" переделанная кнопка закрытия попапа, полную стоимость заказа получает от basketModal.
 
 ## Интерфейсы
 ### Интерфейс товара:
 
-<details><summary>Код и ссылка</summary>
+<details><summary>Код</summary>
 
 ```Typescript
 export interface IItem {
@@ -247,7 +326,7 @@ export interface IItem {
 
 ### Интерфейс данных заказа:
 
-<details><summary>Код и ссылка</summary>
+<details><summary>Код</summary>
 
 ```Typescript
 export interface IOrderInfo {

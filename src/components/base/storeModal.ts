@@ -5,18 +5,23 @@ import { IOrderInfo } from "../../types/orderInfoType";
 export class basketModal {
   static basket: IItem[] = [];
 
-  addItem(id:number) {}
-  removeItem(id:number) {}
-  getTotalPrice(): number {}
-  getTotalItems(): number {}
+  static addItem(id:number): void {}
+  static removeItem(id:number): void {}
+  static getTotalPrice(): number {}
+  static getTotalItems() {
+    return this.basket.length;
+  }
 }
 
 export class orderModal {
-  orderInfo: IOrderInfo;
+  static orderInfo: IOrderInfo = {
+    paymentMethod = null,
+    address = null,
+    email = null,
+    telNum = null
+  };
 
-  checkValidAdress(adress: string) {}
-  checkValidEmail(email: string) {}
-  checkValidTelNum(telNum: string) {}
-
-  toggleBtn(btnElement: HTMLButtonElement) {}
+  static checkValidAdress(adress: string): boolean {}
+  static checkValidEmail(email: string): boolean {}
+  static checkValidTelNum(telNum: string): boolean {}
 }
